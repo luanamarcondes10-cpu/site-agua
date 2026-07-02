@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeto Agrinho 2026 | Gestão Sustentável da Água</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1e88e5;
+            --secondary: #00acc1;
+            --accent: #26c6da;
+            --dark: #0d1b2a;
+            --light: #f5f7fa;
+            --text: #2c3e50;
+            --text-light: #546e7a;
+            --white: #ffffff;
+            --shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--light) 0%, #e0f7fa 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: linear-gradient(180deg, var(--dark) 0%, #1a2332 100%);
+            padding: 30px 0;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .sidebar-header {
+            padding: 0 20px 30px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-header h1 {
+            color: var(--white);
+            font-size: 1.8rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 16px 20px;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+            border-left: 4px solid transparent;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            background: rgba(30, 136, 229, 0.15);
+            color: var(--white);
+            border-left-color: var(--primary);
+            padding-left: 24px;
+        }
+
+        .sidebar-nav i {
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        main {
+            margin-left: 280px;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+            padding: 80px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        header p {
+            font-size: 1.3rem;
+            font-weight: 300;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Sections */
+        section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 40px;
+            display: none;
+        }
+
+        section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            color: var(--dark);
+            margin-bottom: 3rem;
+            position: relative;
+            font-weight: 800;
+        }
+
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 100px;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            margin: 20px auto 0;
+            border-radius: 3px;
+        }
+
+        /* Grid Container */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        /* Info Card */
+        .info-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-top: 5px solid var(--primary);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            border-top-color: var(--secondary);
+        }
+
+        .info-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .info-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .info-card p {
+            color: var(--text-light);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .click-hint {
+            font-size: 0.8rem;
+            color: var(--secondary);
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-top: 15px;
+            display: block;
+            letter-spacing: 1px;
+        }
+
+        /* Trabalhos Section */
+        .trabalhos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .trabalho-card {
+            background: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .trabalho-card:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .trabalho-header {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--white);
+        }
+
+        .trabalho-content {
+            padding: 2rem;
+        }
+
+        .trabalho-content h3 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .trabalho-content p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 12px 28px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: var(--transition);
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(30, 136, 229, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(30, 136, 229, 0.4);
+        }
+
+        /* Dicas Section */
+        .dicas-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .dica-card {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dica-card::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.5s ease;
+        }
+
+        .dica-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .dica-card:hover::before {
+            top: -25%;
+            right: -25%;
+        }
+
+        .dica-icon {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .dica-card h4 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+            font-weight: 700;
+        }
+
+        .dica-card p {
+            font-size: 1rem;
+            line-height: 1.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Quiz Container */
+        #quiz-container {
+            background: var(--white);
+            padding: 50px;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin: 0 auto;
+            border-top: 6px solid var(--primary);
+        }
+
+        .quiz-progress {
+            font-size: 0.9rem;
+            color: var(--secondary);
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .quiz-question {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 25px;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .quiz-option {
+            background: var(--light);
+            padding: 18px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: var(--transition);
+            font-weight: 500;
+            font-size: 1rem;
+            color: var(--text);
+        }
+
+        .quiz-option:hover {
+            background: #e0f7fa;
+            border-color: var(--secondary);
+            transform: translateX(8px);
+        }
+
+        .quiz-option.correct {
+            background: #c8e6c9;
+            border-color: #2e7d32;
+            color: #1b5e20;
+        }
+
+        .quiz-option.wrong {
+            background: #ffcdd2;
+            border-color: #c62828;
+            color: #b71c1c;
+        }
+
+        .quiz-result {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .quiz-result h3 {
+            color: var(--dark);
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        /* Overlay */
+        .content-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.93);
+            z-index: 2000;
+            padding: 40px;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .overlay-card {
+            background: var(--white);
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 50px;
+            border-radius: 16px;
+            position: relative;
+            animation: slideUp 0.3s ease;
+            border-top: 6px solid var(--primary);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2.5rem;
+            cursor: pointer;
+            color: var(--text);
+            line-height: 1;
+            transition: var(--transition);
+            background: none;
+            border: none;
+        }
+
+        .close-btn:hover {
+            color: var(--primary);
+            transform: rotate(90deg);
+        }
+
+        .overlay-content h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 2.2rem;
+            font-weight: 800;
+        }
+
+        .overlay-content p {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .overlay-content ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .overlay-content li {
+            margin-bottom: 12px;
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            text-align: center;
+            padding: 40px 20px;
+            margin-left: 280px;
+            border-top: 3px solid var(--primary);
+        }
+
+        footer p {
+            font-size: 1rem;
+            font-weight: 300;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 20px 0;
+                border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            }
+
+            main {
+                margin-left: 0;
+            }
+
+            footer {
+                margin-left: 0;
+            }
+
+            .sidebar-nav {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 0;
+            }
+
+            header {
+                padding: 50px 20px;
+            }
+
+            header h1 {
+                font-size: 2.5rem;
+            }
+
+            section {
+                padding: 60px 20px;
+            }
+
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+
+            #quiz-container {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h1><i class="fas fa-droplet"></i>Planeta Água: O Futuro do Nosso Recurso Mais Precioso</h1>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-link active" data-section="home">
+                <i class="fas fa-home"></i> Início
+            </a>
+            <a href="#" class="nav-link" data-section="curiosidades">
+                <i class="fas fa-lightbulb"></i> Curiosidades
+            </a>
+            <a href="#" class="nav-link" data-section="trabalhos">
+                <i class="fas fa-briefcase"></i> Trabalhos
+            </a>
+            <a href="#" class="nav-link" data-section="dicas">
+                <i class="fas fa-star"></i> Dicas
+            </a>
+            <a href="#" class="nav-link" data-section="quiz">
+                <i class="fas fa-question-circle"></i> Quiz
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Header -->
+        <header id="home">
+            <h1>💧 Preservação da Água</h1>
+            <p>Promovendo a conscientização sobre o uso racional e a importância do tratamento da água para um futuro sustentável.</p>
+        </header>
+
+        <!-- Curiosidades Section -->
+        <section id="curiosidades" class="active">
+            <h2 class="section-title">Fatos e Curiosidades</h2>
+            <div class="grid-container">
+                <div class="info-card" onclick="abrirCuriosidade('ciclo')">
+                    <h3>🌊 O Ciclo da Água</h3>
+                    <p>A água percorre um ciclo contínuo na natureza através da evaporação, condensação e precipitação, renovando-se constantemente.</p>
+                    <span class="click-hint">Clique para saber mais →</span>
+                </div>
+                <div class="info-card" onclick="abrirCuriosidade('consumo')">
+                    <h3>🏭 Consumo Industrial</h3>
+                    <p>A indústria consome aproximadamente 19% da água doce do mundo. A produção de alimentos requer quantidades enormes de água.</p>
+                    <span class="click-hint">Clique para saber mais →</span>
+                </div>
+                <div class="info-card" onclick="abrirCuriosidade('contaminacao')">
+                    <h3>☠️ Contaminação</h3>
+                    <p>2 bilhões de pessoas vivem em regiões com escassez severa de água. A poluição afeta a qualidade de 80% dos rios globais.</p>
+                    <span class="click-hint">Clique para saber mais →</span>
+                </div>
+                <div class="info-card" onclick="abrirCuriosidade('tecnologia')">
+                    <h3>🔬 Tecnologia e Inovação</h3>
+                    <p>Novas tecnologias como dessalinização e tratamento avançado permitem reutilizar água em larga escala.</p>
+                    <span class="click-hint">Clique para saber mais →</span>
+                </div>
+                <div class="info-card" onclick="abrirCuriosidade('biodiversidade')">
+                    <h3>🐠 Biodiversidade Aquática</h3>
+                    <p>Os ecossistemas aquáticos abrigam 10% de toda a vida do planeta, mas ocupam apenas 0,8% da superfície terrestre.</p>
+                    <span class="click-hint">Clique para saber mais →</span>
+                </div>
+                <div class="info-card" onclick="abrirCuriosidade('economia')">
+                    <h3>💰 Economia da Água</h3>
+                    <p>A água é essencial para a economia global. Setores como agricultura, energia e turismo dependem completamente dela.</p>
+                    <span class="click-hint">Clique para saber mais →</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Overlay Curiosidades -->
+        <div id="curiosidade-overlay" class="content-overlay">
+            <div class="overlay-card">
+                <button class="close-btn" onclick="fecharOverlay('curiosidade-overlay')">&times;</button>
+                <div id="curiosidade-detalhe" class="overlay-content"></div>
+            </div>
+        </div>
+
+        <!-- Overlay Gibi -->
+        <div id="gibi-overlay" class="content-overlay">
+            <div class="overlay-card">
+                <button class="close-btn" onclick="fecharOverlay('gibi-overlay')">&times;</button>
+                <h2 style="text-align: center; color: var(--primary); margin-bottom: 20px;">Gibi Educativo</h2>
+                <img id="pagina" src="" alt="Página do Gibi" style="width:100%; max-width:700px; display:block; margin:20px auto; border-radius:8px;">
+                <p id="contador" style="text-align: center; font-weight: 600; margin: 10px 0; color: var(--text);"></p>
+                <div style="display:flex; justify-content:center; gap:1rem; margin-top:20px;">
+                    <button class="btn" onclick="anterior()">Anterior</button>
+                    <button class="btn" onclick="proxima()">Próxima</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Overlay Vídeo -->
+        <div id="video-overlay" class="content-overlay">
+            <div class="overlay-card">
+                <button class="close-btn" onclick="fecharOverlay('video-overlay')">&times;</button>
+                <h2 style="text-align: center; color: var(--primary); margin-bottom: 20px;">Ciclo da Água - Stop Motion</h2>
+                <video width="100%" controls style="border-radius: 8px;">
+                    <source src="stopmotion.mp4" type="video/mp4">
+                    Seu navegador não suporta vídeos HTML5.
+                </video>
+            </div>
+        </div>
+
+        <!-- Trabalhos Section -->
+        <section id="trabalhos">
+            <h2 class="section-title">Iniciativas Educativas</h2>
+            <div class="trabalhos-grid" style="grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));">
+                <div class="trabalho-card">
+                    <div class="trabalho-header">📖</div>
+                    <div class="trabalho-content">
+                        <h3>Gibi Digital</h3>
+                        <p>Uma abordagem lúdica e interativa sobre o ciclo da água e sua importância. Navegue pelas páginas do gibi educativo e aprenda de forma divertida!</p>
+                        <button class="btn" onclick="abrirGibi()">Acessar Gibi</button>
+                    </div>
+                </div>
+                <div class="trabalho-card">
+                    <div class="trabalho-header">🎥</div>
+                    <div class="trabalho-content">
+                        <h3>Produção Audiovisual</h3>
+                        <p>Animação em Stop Motion demonstrando o ciclo hidrológico de forma criativa e educativa. Uma produção visual impressionante!</p>
+                        <button class="btn" onclick="abrirVideo()">Assistir Vídeo</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dicas Section -->
+        <section id="dicas">
+            <h2 class="section-title">Dicas Práticas para Economizar Água</h2>
+            <div class="dicas-container">
+                <div class="dica-card">
+                    <div class="dica-icon">🚿</div>
+                    <h4>Banhos Rápidos</h4>
+                    <p>Reduzir o tempo de banho para 5 minutos pode economizar até 100 litros de água por dia. Feche a torneira enquanto se ensaboa.</p>
+                </div>
+                <div class="dica-card">
+                    <div class="dica-icon">🪴</div>
+                    <h4>Reutilize Água</h4>
+                    <p>Aproveite a água da chuva ou da limpeza para regar plantas e lavar calçadas. Cada gota economizada faz diferença!</p>
+                </div>
+                <div class="dica-card">
+                    <div class="dica-icon">🔧</div>
+                    <h4>Conserte Vazamentos</h4>
+                    <p>Um vazamento pequeno pode desperdiçar até 46 mil litros por ano. Verifique torneiras, canos e descargas regularmente.</p>
+                </div>
+                <div class="dica-card">
+                    <div class="dica-icon">🍽️</div>
+                    <h4>Lave Louça Eficientemente</h4>
+                    <p>Use uma bacia com água para lavar louça em vez de deixar a torneira aberta. Economize até 100 litros por refeição.</p>
+                </div>
+                <div class="dica-card">
+                    <div class="dica-icon">🚽</div>
+                    <h4>Descarga Inteligente</h4>
+                    <p>Coloque uma garrafa dentro da caixa de descarga para reduzir o volume de água. Economize 2 litros por descarga.</p>
+                </div>
+                <div class="dica-card">
+                    <div class="dica-icon">🌍</div>
+                    <h4>Conscientização Coletiva</h4>
+                    <p>Compartilhe essas dicas com amigos e família. A mudança de hábitos em massa é essencial para preservar nossos recursos.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section id="quiz">
+            <h2 class="section-title">Quiz da Água</h2>
+            <div id="quiz-container">
+                <div id="quiz-start">
+                    <p style="text-align: center; margin-bottom: 20px; font-size: 1.1rem;">Teste seus conhecimentos com 8 perguntas sobre a importância da água e sustentabilidade!</p>
+                    <div style="text-align: center;">
+                        <button class="btn" onclick="startQuiz()">Começar Quiz</button>
+                    </div>
+                </div>
+                <div id="quiz-box" style="display: none;">
+                    <div class="quiz-progress">Pergunta <span id="q-current">1</span> de 8</div>
+                    <div class="quiz-question" id="q-text">Texto da Pergunta</div>
+                    <div class="quiz-options" id="q-options"></div>
+                </div>
+                <div id="quiz-result" class="quiz-result" style="display: none;">
+                    <h3 id="res-title">Parabéns!</h3>
+                    <p id="res-score" style="font-size: 1.5rem; margin: 20px 0;"></p>
+                    <button class="btn" onclick="startQuiz()">Tentar Novamente</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Projeto Agrinho | Compromisso com a Educação e Sustentabilidade</p>
+    </footer>
+
+    <script>
+        // Navigation
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sectionId = link.getAttribute('data-section');
+                
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                
+                sections.forEach(s => s.classList.remove('active'));
+                
+                if (sectionId === 'home') {
+                    document.getElementById('home').scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    document.getElementById(sectionId).classList.add('active');
+                    document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Curiosidades
+        const detalhesCuriosidades = {
+            ciclo: {
+                titulo: "O Ciclo Contínuo da Água 🌊",
+                conteudo: `
+                    <p>O ciclo da água é um processo fundamental que mantém a vida no planeta. A água circula continuamente através de diferentes estados e ambientes:</p>
+                    <ul>
+                        <li><b>Evaporação:</b> A água dos oceanos, rios e lagos se transforma em vapor sob o calor do sol.</li>
+                        <li><b>Transpiração:</b> As plantas liberam água através de suas folhas, contribuindo para a umidade atmosférica.</li>
+                        <li><b>Condensação:</b> O vapor se resfria na atmosfera e forma nuvens.</li>
+                        <li><b>Precipitação:</b> A água retorna à terra como chuva, neve ou granizo.</li>
+                        <li><b>Infiltração:</b> Parte da água penetra o solo, alimentando aquíferos subterrâneos.</li>
+                    </ul>
+                    <p>Este ciclo é essencial para distribuir água doce pelo planeta e manter os ecossistemas vivos.</p>
+                `
+            },
+            consumo: {
+                titulo: "Consumo Industrial de Água 🏭",
+                conteudo: `
+                    <p>A indústria é um dos maiores consumidores de água do mundo, utilizando-a em diversos processos:</p>
+                    <ul>
+                        <li><b>Agricultura:</b> Consome 70% de toda a água doce extraída, principalmente para irrigação.</li>
+                        <li><b>Indústria Manufatureira:</b> Usa 19% para resfriamento, limpeza e produção de bens.</li>
+                        <li><b>Consumo Doméstico:</b> Representa 11% do uso total, incluindo beber, cozinhar e higiene.</li>
+                        <li><b>Produção de Alimentos:</b> Requer quantidades enormes (ex: 1 kg de carne bovina requer 15 mil litros).</li>
+                    </ul>
+                    <p>A eficiência industrial é crucial para reduzir o desperdício e preservar recursos hídricos.</p>
+                `
+            },
+            contaminacao: {
+                titulo: "Contaminação e Escassez ☠️",
+                conteudo: `
+                    <p>A crise hídrica global é alarmante e afeta bilhões de pessoas:</p>
+                    <ul>
+                        <li><b>Escassez Severa:</b> 2 bilhões de pessoas vivem em regiões com escassez severa de água potável.</li>
+                        <li><b>Poluição de Rios:</b> 80% dos rios globais estão contaminados por atividades humanas.</li>
+                        <li><b>Contaminantes:</b> Plásticos, pesticidas, metais pesados e resíduos industriais comprometem a qualidade.</li>
+                        <li><b>Impacto na Saúde:</b> 829 mil pessoas morrem anualmente por doenças relacionadas à água contaminada.</li>
+                    </ul>
+                    <p>A proteção das fontes de água é uma questão de sobrevivência humana.</p>
+                `
+            },
+            tecnologia: {
+                titulo: "Tecnologia e Inovação 🔬",
+                conteudo: `
+                    <p>Novas tecnologias estão revolucionando o tratamento e reutilização de água:</p>
+                    <ul>
+                        <li><b>Dessalinização:</b> Converte água salgada em água doce, promissora para regiões costeiras.</li>
+                        <li><b>Filtração Avançada:</b> Membranas de nanofiltração removem contaminantes microscópicos.</li>
+                        <li><b>Tratamento com UV:</b> Luz ultravioleta elimina bactérias e vírus sem produtos químicos.</li>
+                        <li><b>Reutilização de Água:</b> Tecnologias permitem reutilizar água em até 80% dos processos industriais.</li>
+                        <li><b>IoT e Monitoramento:</b> Sensores inteligentes detectam vazamentos e otimizam o consumo.</li>
+                    </ul>
+                    <p>A inovação é fundamental para enfrentar a crise hídrica global.</p>
+                `
+            },
+            biodiversidade: {
+                titulo: "Biodiversidade Aquática 🐠",
+                conteudo: `
+                    <p>Os ecossistemas aquáticos são vitais para a vida no planeta:</p>
+                    <ul>
+                        <li><b>Cobertura Limitada:</b> Ocupam apenas 0,8% da superfície terrestre, mas abrigam 10% de toda a vida.</li>
+                        <li><b>Espécies Aquáticas:</b> Mais de 1 milhão de espécies vivem em ambientes aquáticos.</li>
+                        <li><b>Ameaças:</b> Poluição, pesca excessiva e mudanças climáticas ameaçam a biodiversidade.</li>
+                        <li><b>Importância:</b> Peixes fornecem proteína para 3 bilhões de pessoas globalmente.</li>
+                        <li><b>Conservação:</b> Proteger rios, lagos e oceanos é essencial para manter a vida selvagem.</li>
+                    </ul>
+                    <p>A preservação dos ecossistemas aquáticos é fundamental para o equilíbrio planetário.</p>
+                `
+            },
+            economia: {
+                titulo: "Economia da Água 💰",
+                conteudo: `
+                    <p>A água é um recurso econômico essencial para o desenvolvimento global:</p>
+                    <ul>
+                        <li><b>Agricultura:</b> Setor que mais depende de água, gerando bilhões em alimentos globalmente.</li>
+                        <li><b>Energia:</b> Hidrelétricas produzem 16% da eletricidade mundial usando água.</li>
+                        <li><b>Turismo:</b> Destinos aquáticos geram bilhões em receita turística anualmente.</li>
+                        <li><b>Indústria:</b> Manufatura, química e processamento dependem completamente de água.</li>
+                        <li><b>Valor Futuro:</b> Especialistas preveem que água será mais valiosa que petróleo no futuro.</li>
+                    </ul>
+                    <p>Investir em preservação de água é investir no futuro econômico do planeta.</p>
+                `
+            }
+        };
+
+        function abrirCuriosidade(key) {
+            const detalhe = detalhesCuriosidades[key];
+            const container = document.getElementById('curiosidade-detalhe');
+            container.innerHTML = `<h2>${detalhe.titulo}</h2>${detalhe.conteudo}`;
+            document.getElementById('curiosidade-overlay').style.display = 'block';
+        }
+
+        function fecharOverlay(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        // Quiz
+        const quizData = [
+            { q: "Qual porcentagem da superfície terrestre é ocupada por ecossistemas aquáticos?", a: ["0.8%", "5%", "15%", "25%"], c: 0 },
+            { q: "Quantas pessoas vivem em regiões com escassez severa de água?", a: ["500 milhões", "1 bilhão", "2 bilhões", "3 bilhões"], c: 2 },
+            { q: "Qual setor consome 70% de toda a água doce extraída?", a: ["Indústria", "Agricultura", "Consumo doméstico", "Energia"], c: 1 },
+            { q: "Quantos litros de água são necessários para produzir 1 kg de carne bovina?", a: ["1.500 litros", "5.000 litros", "10.000 litros", "15.000 litros"], c: 3 },
+            { q: "Qual porcentagem dos rios globais está contaminada?", a: ["30%", "50%", "80%", "95%"], c: 2 },
+            { q: "Quantas pessoas morrem anualmente por doenças relacionadas à água contaminada?", a: ["100 mil", "500 mil", "829 mil", "1 milhão"], c: 2 },
+            { q: "Qual tecnologia converte água salgada em água doce?", a: ["Filtração", "Dessalinização", "Evaporação", "Condensação"], c: 1 },
+            { q: "Qual porcentagem da eletricidade mundial é produzida por hidrelétricas?", a: ["5%", "10%", "16%", "25%"], c: 2 }
+        ];
+
+        let currentQ = 0, quizScore = 0;
+
+        function startQuiz() {
+            currentQ = 0;
+            quizScore = 0;
+            document.getElementById('quiz-start').style.display = 'none';
+            document.getElementById('quiz-result').style.display = 'none';
+            document.getElementById('quiz-box').style.display = 'block';
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const q = quizData[currentQ];
+            document.getElementById('q-current').innerText = currentQ + 1;
+            document.getElementById('q-text').innerText = q.q;
+            const optionsDiv = document.getElementById('q-options');
+            optionsDiv.innerHTML = '';
+            q.a.forEach((opt, i) => {
+                const div = document.createElement('div');
+                div.className = 'quiz-option';
+                div.innerText = opt;
+                div.onclick = () => checkAnswer(i);
+                optionsDiv.appendChild(div);
+            });
+        }
+
+        function checkAnswer(idx) {
+            const correct = quizData[currentQ].c;
+            const options = document.querySelectorAll('.quiz-option');
+            options.forEach(opt => opt.onclick = null);
+            if (idx === correct) {
+                options[idx].classList.add('correct');
+                quizScore++;
+            } else {
+                options[idx].classList.add('wrong');
+                options[correct].classList.add('correct');
+            }
+            setTimeout(() => {
+                currentQ++;
+                if (currentQ < quizData.length) showQuestion();
+                else showResult();
+            }, 1500);
+        }
+
+        function showResult() {
+            document.getElementById('quiz-box').style.display = 'none';
+            document.getElementById('quiz-result').style.display = 'block';
+            document.getElementById('res-score').innerText = `Você acertou ${quizScore} de 8 perguntas!`;
+        }
+
+        // Gibi Logic (Ajustado para 4 páginas)
+        const paginas = ["gibi_p1.png", "gibi_p2.png", "gibi_p3.png", "gibi_p4.png"];
+        let paginaAtual = 0;
+        
+        function atualizarGibi() {
+            document.getElementById("pagina").src = paginas[paginaAtual];
+            document.getElementById("contador").innerText = `Página ${paginaAtual + 1} de ${paginas.length}`;
+        }
+        
+        function proxima() {
+            if (paginaAtual < paginas.length - 1) {
+                paginaAtual++;
+                atualizarGibi();
+            }
+        }
+        
+        function anterior() {
+            if (paginaAtual > 0) {
+                paginaAtual--;
+                atualizarGibi();
+            }
+        }
+        
+        function abrirGibi() {
+            document.getElementById('gibi-overlay').style.display = 'block';
+            atualizarGibi();
+        }
+        
+        function abrirVideo() {
+            document.getElementById('video-overlay').style.display = 'block';
+        }
+
+        // Close overlay on background click
+        document.getElementById('curiosidade-overlay').addEventListener('click', (e) => {
+            if (e.target.id === 'curiosidade-overlay') {
+                fecharOverlay('curiosidade-overlay');
+            }
+        });
+        document.getElementById('gibi-overlay').addEventListener('click', (e) => {
+            if (e.target.id === 'gibi-overlay') {
+                fecharOverlay('gibi-overlay');
+            }
+        });
+        document.getElementById('video-overlay').addEventListener('click', (e) => {
+            if (e.target.id === 'video-overlay') {
+                fecharOverlay('video-overlay');
+            }
+        });
+    </script>
+</body>
+</html>
